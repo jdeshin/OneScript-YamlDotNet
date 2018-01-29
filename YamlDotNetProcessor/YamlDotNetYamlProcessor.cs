@@ -1,5 +1,6 @@
-﻿// 
-//
+﻿// Copyright (c) Yury Deshin
+// This software based on YamlDotNet library
+// Copyright (c) Antoine Aubry and contributors
 using System;
 using System.Collections.Generic;
 using System.Linq;
