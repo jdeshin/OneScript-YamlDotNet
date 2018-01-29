@@ -27,6 +27,9 @@ namespace TestApp
     {
         static void Main(string[] args)
         {
+            ScriptEngine.HostedScript.HostedScriptEngine engine = new ScriptEngine.HostedScript.HostedScriptEngine();
+            engine.Initialize();
+
             System.IO.TextReader rd = System.IO.File.OpenText("text.txt");
             string yaml = rd.ReadToEnd();
             var sr = new StringReader(yaml);
@@ -35,40 +38,38 @@ namespace TestApp
 
             var result = deserializer.Deserialize(sr);
 
-            object res = GetValue(result);
+            IValue res = BuildResults(result);
         }
 
-        public static object GetValue(object source)
+        private static IValue BuildResults(object source)
         {
             if (source == null)
-                return source;
+                return ValueFactory.Create();
 
             if (source is List<object>)
             {
-                foreach (object element in (List<object>)source)
-                {
-                    object value = GetValue(element);
-                }
+                ArrayImpl array = new ArrayImpl();
 
-                return source;
+                foreach (object element in (List<object>)source)
+                    array.Add(BuildResults(element));
+
+                return array;
             }
 
             if (source is Dictionary<object, object>)
             {
-                foreach (var element in (Dictionary<object, object>)source)
-                {
-                    object key = GetValue(element.Key);
-                    object value = GetValue(element.Value);
-                }
+                MapImpl map = new MapImpl();
 
-                return source;
+                foreach (var element in (Dictionary<object, object>)source)
+                    map.Insert(BuildResults(element.Key), BuildResults(element.Value));
+
+                return map;
             }
 
             if (source is bool)
-                return source;
+                return ValueFactory.Create(System.Convert.ToBoolean(source));
 
-            // Число
-            if (   source is sbyte
+            if (source is sbyte
                 || source is byte
                 || source is short
                 || source is ushort
@@ -81,14 +82,14 @@ namespace TestApp
                 || source is decimal
                )
 
-            return source;
+                return ValueFactory.Create(System.Convert.ToDecimal(source));
 
-            // Дата
             if (source is DateTime)
-                return source;
+                return ValueFactory.Create(System.Convert.ToDateTime(source));
 
             // Строка или нечто другое
-            return source.ToString();
+            return ValueFactory.Create(System.Convert.ToString(source));
         }
+
     }
 }
