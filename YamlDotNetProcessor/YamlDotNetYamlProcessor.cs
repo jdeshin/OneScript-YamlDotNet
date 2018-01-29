@@ -68,7 +68,7 @@ namespace YamlDotNetProcessor
             }
 
             if (source is bool)
-                return ValueFactory.Create((bool)source);
+                return ValueFactory.Create(System.Convert.ToBoolean(source));
 
             if (source is sbyte
                 || source is byte
@@ -83,13 +83,13 @@ namespace YamlDotNetProcessor
                 || source is decimal
                )
 
-                return ValueFactory.Create((decimal)source);
+                return ValueFactory.Create(System.Convert.ToDecimal(source));
 
             if (source is DateTime)
-                return ValueFactory.Create((DateTime)source);
+                return ValueFactory.Create(System.Convert.ToDateTime(source));
 
             // Строка или нечто другое
-            return ValueFactory.Create(source.ToString());
+            return ValueFactory.Create(System.Convert.ToString(source));
         }
 
     }
