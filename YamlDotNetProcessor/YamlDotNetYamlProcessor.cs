@@ -29,6 +29,13 @@ namespace YamlDotNetProcessor
         [ContextMethod("ПрочитатьYaml", "ReadYaml")]
         public IValue ReadYamlString(string yamlString)
         {
+            var deserializer = new YamlDotNet.Serialization.Deserializer();
+
+            var result = deserializer.Deserialize(sr);
+
+            object res = GetValue(result);
+
+
             return ValueFactory.Create();
         }
 
