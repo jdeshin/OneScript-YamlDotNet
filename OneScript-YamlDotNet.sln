@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.27130.2010
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestYaml", "TestYaml\TestYaml.csproj", "{B99B202F-9BA4-4D73-A3DC-BB174B4F7B75}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YamlDotNetProcessor", "YamlDotNetProcessor\YamlDotNetProcessor.csproj", "{7D4CA6D2-7F9A-4339-8C9D-C73436F17279}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YamlDotNetYamlProcessor", "YamlDotNetProcessor\YamlDotNetYamlProcessor.csproj", "{7D4CA6D2-7F9A-4339-8C9D-C73436F17279}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

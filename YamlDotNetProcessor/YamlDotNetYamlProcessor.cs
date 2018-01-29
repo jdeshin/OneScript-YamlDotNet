@@ -14,16 +14,23 @@ using YamlDotNetProcessor;
 namespace YamlDotNetProcessor
 {
     [ContextClass("YamlПроцессорYamlDotNet", "YamlDotNetProcessor")]
-    public class YamlDotNetProcessor : AutoContext<YamlDotNetProcessor>
+    public class YamlDotNetYamlProcessor : AutoContext<YamlDotNetYamlProcessor>
     {
-        public YamlDotNetProcessor()
+        public YamlDotNetYamlProcessor()
         {
         }
 
         [ScriptConstructor(Name = "Без параметров")]
         public static IRuntimeContextInstance Constructor()
         {
-            return (IRuntimeContextInstance)new YamlDotNetProcessor();
+            return (IRuntimeContextInstance)new YamlDotNetYamlProcessor();
         }
+
+        [ContextMethod("ПрочитатьYaml", "ReadYaml")]
+        public IValue ReadYamlString(string yamlString)
+        {
+            return ValueFactory.Create();
+        }
+
     }
 }
