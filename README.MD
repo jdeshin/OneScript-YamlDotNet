@@ -12,23 +12,39 @@
 ## Использование
 
 ```bsl
-ПодключитьВнешнююКомпоненту("ПутьКПапкеСDll\MarkdigMarkdownProcessor.dll");
+ПодключитьВнешнююКомпоненту("ПутьКПапкеГдеРасположеныDll\YamlDotNetProcessor.dll");
+Процессор = Новый YamlПроцессорYamlDotNet;
 
-Процессор = Новый MarkdownПроцессорMarkdig;
-СтрокаMarkdown = "This is a text with some *emphasis*";
+// Нижеследующий текст будет преобразован в массив строк
+СтрокаYaml = "
+|--- # Favorite movies
+| - Casablanca
+| - North by Northwest
+| - The Man Who Wasn't There";
 
-// Вызов без обработки расширений Markdown
-СтрокаHtml = Процессор.ПолучитьHtmlИзMarkdown(СтрокаMarkdown);
-СтрокаТекст = Процессор.ПолучитьСтрокуИзMarkdown(СтрокаMarkdown);
+ОбъектыМассив = Процессор.ПрочитатьYaml(СтрокаYaml);
 
-Сообщить(СтрокаHtml); // <p>This is a text with some <em>emphasis</em></p>
-Сообщить(СтрокаТекст); // 
+Для Каждого ЭлементМассива Из ОбъектыМассив Цикл
+	Сообщить(ЭлементМассива);
+КонецЦикла;
 
-// Вызов с обработкой расширений, за исключением BootStrap, Emoji, SmartyPants и soft line как hard line breaks
-СтрокаHtml = Процессор.ПолучитьHtmlИзMarkdown(СтрокаMarkdown, Истина);
-СтрокаТекст = Процессор.ПолучитьСтрокуИзMarkdown(СтрокаMarkdown, Истина);
+// Нижеследующий текст будет преобразован в соответствие
+СтрокаYaml = "---
+|a: 123                     # an integer
+|b: ""123""                 # a string, disambiguated by quotes
+|c: 123.0                   # a float
+|d: !!float 123             # also a float via explicit data type prefixed by (!!)
+|e: !!str 123               # a string, disambiguated by explicit type
+|f: !!str Yes               # a string via explicit type
+|g: True                     # a boolean True (yaml1.1), string ""Yes"" (yaml1.2)
+|h: Yes we have No bananas  # a string, ""Yes"" and ""No"" disambiguated by context.
+|...";
 
-Сообщить(СтрокаHtml);
-Сообщить(СтрокаТекст);
+ОбъектыСоответствие = Процессор.ПрочитатьYaml(СтрокаYaml);
+
+Для Каждого ЭлементСоответствия Из ОбъектыСоответствие Цикл
+	Сообщить(ЭлементСоответствия.Ключ + " | " + ЭлементСоответствия.Значение);
+КонецЦикла;
+
 ```
 
