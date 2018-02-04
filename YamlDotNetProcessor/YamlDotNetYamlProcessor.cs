@@ -50,6 +50,9 @@ namespace YamlDotNetProcessor
             if (source == null)
                 return ValueFactory.Create();
 
+            if (source is string)
+                return ValueFactory.Create(System.Convert.ToString(source));
+
             if (source is List<object>)
             {
                 ArrayImpl array = new ArrayImpl();
@@ -65,7 +68,7 @@ namespace YamlDotNetProcessor
                 MapImpl map = new MapImpl();
 
                 foreach (var element in (Dictionary<object, object>)source)
-                    map.Insert(BuildResults(element.Key), BuildResults(element.Value));
+                    map.Insert(ValueFactory.Create(System.Convert.ToString(element.Key)), BuildResults(element.Value));
 
                 return map;
             }
@@ -91,7 +94,7 @@ namespace YamlDotNetProcessor
             if (source is DateTime)
                 return ValueFactory.Create(System.Convert.ToDateTime(source));
 
-            // Строка или нечто другое
+            //нечто другое
             return ValueFactory.Create(System.Convert.ToString(source));
         }
 
