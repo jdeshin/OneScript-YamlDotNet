@@ -99,4 +99,25 @@ namespace YamlDotNetProcessor
         }
 
     }
+
+    // Класс - менеджер обработки
+    [ContextClass("YamlПроцессор", "YamlProcessor")]
+    public class YamlDataProcessor : AutoContext<YamlDataProcessor>
+    {
+        public YamlDataProcessor()
+        {
+
+        }
+
+        // Метод платформы
+        [ContextMethod("Создать", "Create")]
+        public IValue Create()
+        {
+            // Создаем объект из модуля объекта
+
+            return new YamlDotNetYamlProcessor();
+        }
+
+    }
+
 }
